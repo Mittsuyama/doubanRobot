@@ -32,4 +32,4 @@ class Reading:
         pass
     
     def topCommnets(self):
-        pass
+        self.url = 'https://book.douban.com/review/best/'
