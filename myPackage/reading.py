@@ -1,13 +1,14 @@
 #/myPackage/reading.py
 
 import requests
+from bs4 import BeautifulSoup
+import json
 
 class Reading:
 
     headers = {}
     proxies = {}
-    url = ''
-    session = requests.Session()
+    url = 'book.douban.com'
     
     def __init__(self):
         self.headers = {
@@ -15,8 +16,6 @@ class Reading:
             'Accept-Language' : 'en,zh-CN;q=0.9,zh;q=0.8,en-US;q=0.7',
             'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'
         }
-        self.url = 'book.douban.com'
-        self.session.get(url, headers = self.headers)
 
     
     def newBooks(self):
@@ -32,4 +31,32 @@ class Reading:
         pass
     
     def topCommnets(self):
+        #get HTMLContent
         self.url = 'https://book.douban.com/review/best/'
+        response = requests.get(self.url, headers = self.headers)
+        soup = BeautifulSoup(response.text, features = 'html.parser')
+
+        title, author, isSpoiler, brief, order = [], [], [], [], []
+        for content in soup.find_all(alt = True, title = True):
+            title.append(content['title'])
+        for content in soup.find_all('a', 'name'):
+            author.append(content.string)
+        for content in soup.find_all('h2'):
+            brief.append(content.string)
+            order.append(content.find('a')['href'][-8:-1])
+        for content in soup.find_all('div', 'short-content'):
+            isSpoiler.append(content.find('p', 'spoiler-tip'))
+        
+        for i in range(0, len(title)):
+            print(title[i])
+            print(author[i])
+            print(brief[i])
+            if isSpoiler == None:
+                print('comment has a spoiler')
+            response = requests.get('https://book.douban.com/j/review/%s/full' % (order[i]), headers = self.headers)
+            jsonData = json.loads(response.text)
+            tempSoup = BeautifulSoup(jsonData['html'], features = 'html.parser')
+            for content in tempSoup.find_all('p'):
+                if content.string != None:
+                    print(content.string)
+                    print('\n')
