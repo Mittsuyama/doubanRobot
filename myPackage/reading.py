@@ -16,7 +16,6 @@ class Reading:
             'Accept-Language' : 'en,zh-CN;q=0.9,zh;q=0.8,en-US;q=0.7',
             'User-Agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36'
         }
-
     
     def newBooks(self):
         pass
@@ -30,12 +29,19 @@ class Reading:
     def bestSellers(self):
         pass
     
+    def getTopCommentsRequest(self, page):
+        self.url = 'https://book.douban.com/review/best/'
+        if page == 1 or page > 3:
+            return requests.get(self.url, headers = self.headers)
+        if page == 2:
+            return requests.get(self.url, headers = self.headers, params = {'start' : '20'})
+        if page == 3:
+            return requests.get(self.url, headers = self.headers, params = {'start' : '40'})
+
     def topCommnets(self):
         #get HTMLContent
-        self.url = 'https://book.douban.com/review/best/'
-        response = requests.get(self.url, headers = self.headers)
+        response = self.getTopCommentsRequest(1)
         soup = BeautifulSoup(response.text, features = 'html.parser')
-
         title, author, isSpoiler, brief, order = [], [], [], [], []
         for content in soup.find_all(alt = True, title = True):
             title.append(content['title'])
