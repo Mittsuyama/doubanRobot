@@ -9,36 +9,29 @@ class mainClass:
     def Init(self):
         self.mainMenuList = ['Reading', 'Movies', 'Musics']
 
-    def reading(self):
+    def chooseReading(self):
         myReading = myPackage.Reading()
         readingMenuList = ['new books', 'top tags', 'book information', 'best sellers', 'top comments']
-        print('------your choice is reading------')
-        for menuOrder in range(0, len(readingMenuList)):
-            print('%d : %s' % (menuOrder + 1, readingMenuList[menuOrder]))
-        print('Input number and press enter ----->')
-        keyBoardInput = input()
-        if keyBoardInput == '1': pass
-        if keyBoardInput == '2': pass
-        if keyBoardInput == '3': pass
-        if keyBoardInput == '4': pass
-        if keyBoardInput == '5': myReading.topCommnets()
+        getKeyboard = myPackage.pushListGetKey(readingMenuList)
+        if getKeyboard == 1: pass
+        if getKeyboard == 2: pass
+        if getKeyboard == 3: myReading.bookInformations()
+        if getKeyboard == 4: pass
+        if getKeyboard == 5: myReading.topCommnets()
 
     
-    def movies(self):
+    def chooseMovies(self):
         pass
 
-    def musics(self):
+    def chooseMusics(self):
         pass
 
     def mainScene(self):
         print('-----Welcome to douban-----')
-        for i in range(1, 4):
-            print('%d : %s' % (i, self.mainMenuList[i - 1]))
-        print('Input number and press enter ----->')
-        keyBoardInput = input()
-        if keyBoardInput == '1': self.reading()
-        if keyBoardInput == '2': self.movies()
-        if keyBoardInput == '3': self.musics()
+        getKeyboard = myPackage.pushListGetKey(self.mainMenuList)
+        if getKeyboard == 1: self.chooseReading()
+        if getKeyboard == 2: self.chooseMovies()
+        if getKeyboard == 3: self.chooseMusics()
 
     def main(self):
         self.Init()
