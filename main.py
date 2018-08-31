@@ -2,6 +2,7 @@
 
 import requests
 import myPackage
+import os
 
 class mainClass:
     mainMenuList = []
@@ -11,13 +12,11 @@ class mainClass:
 
     def chooseReading(self):
         myReading = myPackage.Reading()
-        readingMenuList = ['new books', 'top tags', 'book information', 'best sellers', 'top comments']
+        readingMenuList = ['book information', 'best noted', 'top comments']
         getKeyboard = myPackage.pushListGetKey(readingMenuList)
-        if getKeyboard == 1: pass
-        if getKeyboard == 2: pass
-        if getKeyboard == 3: myReading.bookInformations()
-        if getKeyboard == 4: pass
-        if getKeyboard == 5: myReading.topCommnets()
+        if getKeyboard == 1: myReading.bookInformations()
+        if getKeyboard == 2: myReading.bestNoted()
+        if getKeyboard == 3: myReading.topCommnets()
 
     
     def chooseMovies(self):
