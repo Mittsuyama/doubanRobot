@@ -8,11 +8,19 @@ class mainClass:
     mainMenuList = []
 
     def Init(self):
-        self.mainMenuList = ['Reading', 'Movies', 'Musics']
+        self.mainMenuList = [
+            'Reading',
+            'Movies',
+            'Musics'
+        ]
 
     def chooseReading(self):
         myReading = myPackage.Reading()
-        readingMenuList = ['book information', 'best noted', 'top comments']
+        readingMenuList = [
+            'book information',
+            'best noted',
+            'top comments'
+        ]
         getKeyboard = myPackage.pushListGetKey(readingMenuList)
         if getKeyboard == 1: myReading.bookInformations()
         if getKeyboard == 2: myReading.bestNoted()
@@ -20,7 +28,18 @@ class mainClass:
 
     
     def chooseMovies(self):
-        pass
+        myMovies = myPackage.Movie()
+        movieMenuList = [
+            'host showing',
+            'top movies',
+            'top recommend',
+            'top comments'
+        ]
+        getKeyboard = myPackage.pushListGetKey(movieMenuList)
+        if getKeyboard == 1: myMovies.hostShowing()
+        if getKeyboard == 2: pass
+        if getKeyboard == 3: pass
+        if getKeyboard == 4: pass
 
     def chooseMusics(self):
         pass

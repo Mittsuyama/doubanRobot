@@ -17,7 +17,7 @@ class Reading:
     headers = {}
     proxies = {}
     url = 'https://book.douban.com'
-    f = open('content.md', 'w')
+    f = open('readingContent.md', 'w')
     
     def __init__(self):
         self.headers = {
@@ -101,16 +101,16 @@ class Reading:
         self.f.write('![%s](%s)' % (title, imageUrl))
 
         # get brief information
+        self.f.write('\n```\n')
         scoreNum = soup.find('strong', class_ = 'll rating_num ').string
-        self.f.write('\n**豆瓣评分：' + scoreNum.strip(' ') + '**   ')
+        self.f.write('\n豆瓣评分：' + scoreNum.strip(' ') + '   ')
         self.drawStar(float(scoreNum.strip(' ')))
         # ----------------------------
-        self.f.write('\n```\n')
         otherInfo = soup.find('div', id = 'info')
         for content in otherInfo.descendants:
             if content.name == 'span' and content.has_attr('class') and content['class'][0] == 'pl':
                 self.formatWrite(content.string)
-                self.f.write('  ')
+                self.f.write('   ')
                 if content.next_sibling.next_sibling.name == 'a':
                     self.f.write(content.next_sibling.next_sibling.string.strip(' '))
                 else:
