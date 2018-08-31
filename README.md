@@ -15,3 +15,11 @@ features:
 features:
 
 - Added a function to get the books information
+
+---
+
+`2018/8/31`
+
+features:
+
+- Added a function to get the bet noted books
